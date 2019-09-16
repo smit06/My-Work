@@ -1,0 +1,155 @@
+body{
+    font: Arial, Helvetica, sans-serif;
+}
+#contanier {
+   /* border: 1px solid grey;*/
+    width: 1000px;
+  
+    margin: 0 auto;
+}
+h1 a{
+    font-size:60px;
+    font-weight: 30px;
+    color:purple;
+    text-decoration:none;
+}
+
+#brand{
+ float:left;   
+}
+#searchbox{
+    float:right;
+    background: linear-gradient(#E4F2B9,#B7E953);
+    width:400px;
+    height: 50px;
+    padding: 20px 20px 0 20px;
+    margin-top: 20px;
+}
+.text{
+    width:250px;
+    padding: 5px;
+    font-size: 15px;
+    color:orange;
+    background:white url(image/search.png) right center no-repeat; 
+    border: 1px solid #C8D03E;
+}
+.submit{
+    width:105px;
+    float:right;
+    padding:5px;
+    font-weight: bold;
+    background:#A751D6; 
+    color: white;      
+}
+.clear{
+    clear:both;
+}
+#menu{
+    height: 70px;
+        background: linear-gradient(#F8F594,#D5D533);
+    padding: 5px 0;
+}
+ul{
+    list-style: none;
+     
+   
+}
+ #menu ul li {
+  float: left;
+     padding: 0 30px;
+     height: 20px;
+     border-right: 1px solid  #5d12e7;
+     line-height: 30px;
+     margin: center;
+}
+#menu ul li:last-child{
+    border-right: none;
+}
+#menu ul li a{
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 17px;
+    color:  #5d12e7;
+    -webkit-transition: font-size 0.3s ease;
+     -moz-transition: font-size 0.3s ease;
+     -o-transition: font-size 0.3s ease;
+     -ms-transition: font-size 0.3s ease;
+    transition: font-size 0.3s ease;
+}
+#menu ul li a:hover, #menu ul li a.active{
+    font-size: 20px;
+    font-weight: bold;
+    color:  #B314DB;
+}
+
+#introduction{
+    background: linear-gradient(#E5F2BB,#B7E952);
+    padding: 30px;
+    margin: 16px 0px;
+    
+}
+#introduction h3{
+    font-size: 45px;
+    color: #316901;
+    font-weight: normal;
+}
+#introduction p{
+    font-size: 25px;
+    color: #628F19;
+    text-align: justify;
+}
+.sidebar{
+     width: 420px;
+     height: 500px;
+     border: 1px solid #BAF46F;
+     border-radius: 20px;
+    padding: 10px 30px;
+  
+}
+.sidebar h3{
+     font-size: 30px;
+    color: #B315DB;
+}
+.sidebar ul li a{
+    font-size: 22px;
+    text-decoration: none;
+    color: #5d12e7;
+     -webkit-transition: font-size 0.3s ease;
+     -moz-transition: font-size 0.3s ease;
+     -o-transition: font-size 0.3s ease;
+     -ms-transition: font-size 0.3s ease;
+     transition: font-size 0.3s ease;
+}
+.sidebar ul li a:hover, .sidebar ul li a.active{
+    font-size: 30px;
+    text-decoration: none;
+    color:#B314DB;
+    font-weight: bold;    
+}
+#leftsidebar ul li{
+    padding-bottom: 6px;
+    padding-left: 10px;
+    list-style-image: url(image/rightarrow.png)
+    }
+#leftsidebar{
+    float: left;
+    padding-left: 30px;
+}
+#rightsidebar{
+    float: right;
+    padding-bottom: 6px;
+    padding-left: 60px;
+    
+   /* background: url(image/check.png) left no-repeat;  */ 
+}
+#rightsidebar ul li {
+     padding: 0px 0px 5px 40px;
+    float: left ;
+     background: url(image/check.png) no-repeat;
+}
+.footer{
+    height: 60px;
+    background: linear-gradient(#F6F390, #D5D533);
+    padding: 10px 30px;
+    margin-top: 15px;
+}

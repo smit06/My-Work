@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Stopwatch App</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+      <link href="styling.css" rel="stylesheet">
+	 <link href='https://fonts.googleapis.com/css?family=Vollkorn' rel="stylesheet"> 
+	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  </head>
+  <body>
+     <!--Title-->
+      <div class="container-fluid">
+          <div id="header">Stopwatch</div>
+      
+      <!--Lap Time-->
+      <div id="lap"><span id="lapminute">00</span>:<span id="lapsecond">00</span>:<span id="lapcentisecond">00</span></div>
+      
+      <!--Time-->
+      <div id="time"><span id="timeminute">00</span>:<span id="timesecond">00</span>:<span id="timecentisecond">00</span></div>
+      
+      <!--Controls-->
+      <div id="controlsContainer" class="row">
+          <div class="col-xs-2 col-xs-offset-4">
+              <div id="startButton" class="control">
+                  Start
+              </div>
+              <div id="stopButton" class="control">
+                  Stop
+              </div>
+              <div id="resumeButton" class="control">
+                  Resume
+              </div>
+          </div>
+          <div class="col-xs-2">
+              <div id="lapButton" class="control">
+                  Lap
+              </div>
+              <div id="resetButton" class="control">
+                  Reset
+              </div>
+          </div>
+      </div>
+          
+        <!--Laps-->
+        <div id="laps"></div>  
+          
+    </div>
+      
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+	  
+ <script>
+	 //stopwatch.js
+$(function(){
+    //variables
+    var mode = 0;//App mode
+    var timeCounter = 0;//time counter
+    var lapCounter = 0;//lap counter
+    var action;//variable for setInterval
+    var lapNumber = 0;//Number of Laps
+        
+        //minutes,seconds,centiseconds for time and lap
+    var timeMinutes, timeSeconds, timeCentiseconds, lapMinutes, lapSeconds, lapCentiseconds;
+    
+    //On App load show start and lap buttons
+    hideshowButtons("#startButton","#lapButton");
+    //click on startButton
+    $("#startButton").click(function(){
+        //mode on
+        mode = 1;
+        //show stop and lap buttons
+        hideshowButtons("#stopButton","#lapButton");
+        //start counter
+        startAction();
+    });
+
+    
+    //click on stopButton
+    $("#stopButton").click(function(){
+        //show resume and reset buttons
+        hideshowButtons("#resumeButton","#resetButton");
+        //stop counter
+        clearInterval(action);
+    });
+    
+    //click on resumeButton
+    $("#resumeButton").click(function(){
+        //show stop and lap buttons
+        hideshowButtons("#stopButton","#lapButton");
+        //start counter
+        startAction();
+    });
+    
+    //click on resetButton
+    $("#resetButton").click(function(){
+        //reload the page
+        location.reload();
+    });
+    
+    //click on lapButton
+    $("#lapButton").click(function(){
+        //if mode is ON
+        if(mode){
+            //stop action
+            clearInterval(action);
+            //resetLap and print lap details
+            lapCounter = 0;
+            addLap();
+            //start action
+            startAction();
+        }
+    });
+
+    
+    //functions
+    //hideshowButtons function shows two buttons
+    function hideshowButtons(x,y){
+        $(".control").hide();
+        $(x).show();
+        $(y).show();
+    }
+    
+    //start the counter
+    function startAction(){
+        action = setInterval(function(){
+            timeCounter++;
+            if(timeCounter == 100*60*100){
+                timeCounter = 0;   
+            }
+            lapCounter++;
+            if(lapCounter == 100*60*100){
+                lapCounter = 0;   
+            }
+            updateTime();
+        },10);
+    }
+    
+    //updateTime: converts counters to min,sec,centisec
+    function updateTime(){
+        //1min=60*100centiseconds=6000centiseconds
+        timeMinutes = Math.floor(timeCounter/6000);
+        //1sec=100centiseconds
+        timeSeconds = Math.floor((timeCounter%6000)/100);
+        timeCentiseconds = (timeCounter%6000)%100;
+        $("#timeminute").text(format(timeMinutes));
+        $("#timesecond").text(format(timeSeconds));
+        $("#timecentisecond").text(format(timeCentiseconds));
+        
+        //1min=60*100centiseconds=6000centiseconds
+        lapMinutes = Math.floor(lapCounter/6000);
+        //1sec=100centiseconds
+        lapSeconds = Math.floor((lapCounter%6000)/100);
+        lapCentiseconds = (lapCounter%6000)%100;
+        $("#lapminute").text(format(lapMinutes));
+        $("#lapsecond").text(format(lapSeconds));
+        $("#lapcentisecond").text(format(lapCentiseconds));
+    }
+    
+    //format numbers
+    function format(number){
+        if(number<10){
+            return '0'+number;   
+        }else{
+            return number;   
+        }
+    }
+    
+    //addLap function: print lap details inside the lap box
+    function addLap(){
+        lapNumber++;
+           var myLapDetails =
+               '<div class="lap">'+
+                    '<div class="laptimetitle">'+
+                        'Lap'+ lapNumber +
+                    '</div>'+
+                    '<div class="laptime">'+
+                        '<span>'+ format(lapMinutes) +'</span>'+
+                        ':<span>'+ format(lapSeconds) +'</span>'+
+                        ':<span>'+ format(lapCentiseconds) +'</span>'+
+                    '</div>'+
+               '</div>';
+        $(myLapDetails).prependTo("#laps");
+    }
+});
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+</script>
+  </body>
+</html>
